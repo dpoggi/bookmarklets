@@ -1,6 +1,6 @@
 UGLIFY	= uglifyjs
 PREFIX	= printf "javascript:" >
-PB	= dcp-clip
+PB	= ./clip.sh
 RM	= rm -f
 TARGET	= $(patsubst %.js,%.browser.js,$(shell ls *.js | grep -v '\.browser\.js$$'))
 
