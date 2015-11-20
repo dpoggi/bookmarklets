@@ -134,7 +134,7 @@
   function champURL(name) {
     var champID;
 
-    champID = champIDs[name.toLowerCase()];
+    champID = champIDs[name.toLowerCase().replace(/[^a-z ]/, "")];
     return "http://www.mobafire.com/league-of-legends/browse?sort_type=score_weighted&sort_order=&champion_id=" + champID + "&lane=&role=&map=&guide_type=&threshold=all&freshness=S6&author=";
   }
 
