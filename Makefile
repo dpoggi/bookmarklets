@@ -1,6 +1,6 @@
 UGLIFY	= ./node_modules/.bin/uglifyjs
 PREFIX	= printf "javascript:" >
-PB	= ./clip.sh
+PB	= ./copy_to_clipboard.sh
 RM	= rm -f
 
 NPM	= npm
