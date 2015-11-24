@@ -1,6 +1,15 @@
+// mobafire.js -- champion guide shortcut for Mobafire
+//
+// Copyright (C) 2015 Dan Poggi
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+
 (function () {
   var champIDs, champName;
 
+  // In the event of new champions, get_champ_ids.rb will generate
+  // an up-to-date version of this object.
   champIDs = {
     "aatrox": 114,
     "ahri": 89,
@@ -138,6 +147,8 @@
     return "http://www.mobafire.com/league-of-legends/browse?sort_type=score_weighted&sort_order=&champion_id=" + champID + "&lane=&role=&map=&guide_type=&threshold=all&freshness=S6&author=";
   }
 
+  // Will jump directly to top rated guides/builds, Season 6 only, for
+  // a given champion. Saves 4-5 page loads depending where you're at.
   champName = prompt("Enter champion name:");
   window.location.href = champURL(champName);
 })();

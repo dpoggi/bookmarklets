@@ -1,3 +1,10 @@
+// github.js -- unsubscribe from GitHub repos meeting particular criteria
+//
+// Copyright (C) 2015 Dan Poggi
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+
 (function () {
   if (window.location.host.indexOf("github.com") === -1) return;
 
@@ -11,6 +18,8 @@
     repo = tokens[1];
     $btn = $($li.find("form.js-unsubscribe-form button")[0]);
 
+    // Will prompt to unsubscribe from repos not from org organization, or
+    // ones that are from org organization but contain substr substring.
     org = prompt("Organization:");
     substr = prompt("Substring:");
 

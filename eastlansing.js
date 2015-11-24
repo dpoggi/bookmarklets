@@ -1,5 +1,13 @@
+// eastlansing.js -- download ordinances from the City of East Lansing
+//
+// Copyright (C) 2015 Dan Poggi
+//
+// This software may be modified and distributed under the terms
+// of the MIT license. See the LICENSE file for details.
+
 (function () {
   var interval, searchLinks, expressions, links, closureFactory, i;
+  if (window.location.host.indexOf("cityofeastlansing.com") === -1) return;
 
   interval = 2.5; // seconds
 
