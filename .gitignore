@@ -1,3 +1,4 @@
 *.DS_Store
 *.browser.js
 champ_ids.json
+node_modules/
