@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+# get_champ_ids.rb -- scrape Mobafire for champion name -> ID mapping
+#
+# Copyright (C) 2015 Dan Poggi
+#
+# This software may be modified and distributed under the terms
+# of the MIT license. See the LICENSE file for details.
 
 require 'bundler/setup'
 require 'rest-client'
