@@ -8,7 +8,6 @@
     "url": "https://github.com/dpoggi/bookmarklets"
   },
   "license": "MIT",
-  "private": true,
   "dependencies": {
     "uglify-js": "*"
   }
