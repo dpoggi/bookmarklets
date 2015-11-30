@@ -47,6 +47,7 @@
     "graves": 85,
     "hecarim": 96,
     "heimerdinger": 40,
+    "illaoi": 128,
     "irelia": 64,
     "janna": 29,
     "jarvan iv": 71,
