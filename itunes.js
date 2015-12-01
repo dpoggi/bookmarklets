@@ -5,42 +5,30 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-(function () {
-  var trackNums, names, artists, i, output;
+(function() {
+  if (window.location.host.indexOf("itunes.apple.com") === -1) return;
 
-  function scrapeData(selector) {
-    var els;
-    els = document.querySelectorAll(selector);
-    return Array.prototype.slice.call(els).map(function(el) {
-      return el.textContent;
-    });
+  const badNames = [
+    "Continuous Mix",
+    "Digital Booklet",
+  ];
+
+  function elContent(selector) {
+    var els = Array.from(document.querySelectorAll(selector));
+    return els.map( el => el.textContent );
   }
 
-  trackNums = scrapeData("td.index span.index").map(function(num) {
-    if (num.length === 1) {
-      return "00" + num;
-    } else if (num.length === 2) {
-      return "0" + num;
-    } else {
-      return num;
-    }
+  var names = elContent("td.name span.text").filter((name) => {
+    var truths = badNames.map( badName => name.indexOf(badName) === -1 );
+    return truths.indexOf(false) === -1;
   });
-  names = scrapeData("td.name span.text");
-  artists = scrapeData("td.artist span.text");
+  var artists = elContent("td.artist span.text").slice(0, names.length);
 
-  output = "";
-  for (i = 0; i < names.length; i++) {
-    if (names[i].indexOf("Continuous Mix") !== -1 ||
-        names[i].indexOf("Digital Booklet") !== -1) {
-      continue;
-    }
-
-    if (i > 0) {
-      output += "\n";
-    }
-    output += trackNums[i] + " " + artists[i] + " - " + names[i];
-  }
-
-  window.trackListText = output;
-  console.log(output);
+  var tracks = names.map((_, i) => {
+    var s = (i + 1).toString();
+    var trackNum = "0".repeat(3 - s.length) + s;
+    return trackNum + " " + artists[i] + " - " + names[i];
+  });
+  window.trackList = tracks.join("\n");
+  console.log(window.trackList);
 })();
