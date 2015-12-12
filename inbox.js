@@ -1,67 +1,78 @@
 // inbox.js -- update Fluid app dock badge for Google Inbox
-// *NOT A BOOKMARKLET*
+//
+// *NOT A BOOKMARKLET*, also written in archaic Safari <9 JS,
+// because Fluid isn't really maintained anymore and for some
+// reason things that should be available in Safari 9 just aren't
+// available (looking at you, Array.from).
 //
 // Copyright (C) 2015 Dan Poggi
 //
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-function updateBadge(badge) {
-  window.fluid.dockBadge = badge;
-}
+(function() {
+  var els;
 
-function checkInbox() {
-  var count, closedItems, i, openItems;
+  function updateBadge(badge) {
+    window.fluid.dockBadge = badge;
+  }
 
-  count = 0;
+  function checkInbox() {
+    var count, closedItems, i, openItems;
 
-  // We have to use old-school for loops here or we'll get strange
-  // elements in the NodeLists.
+    count = 0;
 
-  closedItems = document.getElementsByClassName("jS");
-  for (i = 0; i < closedItems.length; i++) {
-    if ((" " + closedItems[i].className + " ").indexOf(" kl ") === -1) {
+    // We have to use old-school for loops here or we'll get strange
+    // elements in the NodeLists.
+    closedItems = document.getElementsByClassName("jS");
+    for (i = 0; i < closedItems.length; i++) {
+      if ((" " + closedItems[i].className + " ").indexOf(" kl ") === -1) {
+        count += 1;
+      }
+    }
+
+    openItems = document.getElementsByClassName("mh");
+    for (i = 0; i < openItems.length; i++) {
       count += 1;
+    }
+
+    if (count >= 1) {
+      updateBadge(count);
+    } else {
+      updateBadge("");
     }
   }
 
-  openItems = document.getElementsByClassName("mh");
-  for (i = 0; i < openItems.length; i++) {
-    count += 1;
+  function disconnectObserver(event) {
+    if (typeof window.observer !== "undefined") {
+      window.observer.disconnect();
+    }
   }
 
-  if (count >= 1) {
-    updateBadge(count);
+  disconnectObserver();
+  window.observer = new MutationObserver(function(mutations) {
+    checkInbox();
+  });
+  window.observerConfig = {
+    childList: true,
+    attributes: false,
+    characterData: false,
+    subtree: true,
+  };
+
+  updateBadge("");
+  els = document.querySelectorAll(".yDSKFc.viy5Tb");
+  if (els.length >= 1) {
+    window.observer.observe(els[0], window.observerConfig);
+    checkInbox();
   } else {
-    updateBadge("");
+    alert("Couldn't find parent element, dock badging disabled!");
   }
-}
 
-function disconnectObserver() {
-  if (typeof window.observer !== "undefined") {
-    window.observer.disconnect();
-  }
-}
-
-var els;
-
-disconnectObserver();
-window.observer = new MutationObserver(function(mutations) {
-  checkInbox();
-});
-window.observerConfig = {
-  childList: true,
-  attributes: false,
-  characterData: false,
-  subtree: true,
-};
-
-updateBadge("");
-els = document.querySelectorAll(".yDSKFc.viy5Tb");
-if (els.length >= 1) {
-  window.observer.observe(els[0], window.observerConfig);
-}
-checkInbox();
-
-window.addEventListener("beforeunload", disconnectObserver);
-window.addEventListener("unload", disconnectObserver);
+  // For some hope of dock badge predictability when handling multiple
+  // tabs (multiple Gmail accounts).
+  window.removeEventListener("beforeunload", disconnectObserver);
+  window.addEventListener("beforeunload", disconnectObserver);
+  window.removeEventListener("unload", disconnectObserver);
+  window.addEventListener("unload", disconnectObserver);
+})();
