@@ -43,13 +43,15 @@
     }
   }
 
-  function disconnectObserver(event) {
-    if (typeof window.observer !== "undefined") {
-      window.observer.disconnect();
+  if (typeof window.disconnectObserver === "undefined") {
+    window.disconnectObserver = function(event) {
+      if (typeof window.observer !== "undefined") {
+        window.observer.disconnect();
+      }
     }
   }
 
-  disconnectObserver();
+  window.disconnectObserver();
   window.observer = new MutationObserver(function(mutations) {
     checkInbox();
   });
@@ -71,8 +73,8 @@
 
   // For some hope of dock badge predictability when handling multiple
   // tabs (multiple Gmail accounts).
-  window.removeEventListener("beforeunload", disconnectObserver);
-  window.addEventListener("beforeunload", disconnectObserver);
-  window.removeEventListener("unload", disconnectObserver);
-  window.addEventListener("unload", disconnectObserver);
+  window.removeEventListener("beforeunload", window.disconnectObserver);
+  window.addEventListener("beforeunload", window.disconnectObserver);
+  window.removeEventListener("unload", window.disconnectObserver);
+  window.addEventListener("unload", window.disconnectObserver);
 })();
