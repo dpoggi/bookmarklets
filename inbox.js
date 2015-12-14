@@ -43,7 +43,7 @@
     }
   }
 
-  if (typeof window.disconnectObserver === "undefined") {
+  if (typeof window.disconnectObserver !== "function") {
     window.disconnectObserver = function(event) {
       if (typeof window.observer !== "undefined") {
         window.observer.disconnect();
