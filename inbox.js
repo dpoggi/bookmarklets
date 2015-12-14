@@ -68,7 +68,7 @@
     window.observer.observe(els[0], window.observerConfig);
     checkInbox();
   } else {
-    alert("Couldn't find parent element, dock badging disabled!");
+    console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
   }
 
   // For some hope of dock badge predictability when handling multiple
