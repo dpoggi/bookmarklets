@@ -13,6 +13,12 @@
 (function() {
   var els;
 
+  // Since my Fluid app likes to capture Google Docs links no matter
+  // what I do...
+  if (window.location.host.indexOf("inbox.google.com") === -1) {
+    return;
+  }
+
   function updateBadge(badge) {
     window.fluid.dockBadge = badge;
   }
