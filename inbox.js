@@ -30,7 +30,9 @@
   }
 
   function updateBadge(badge) {
-    window.fluid.dockBadge = badge;
+    if (typeof window.fluid !== "undefined") {
+      window.fluid.dockBadge = badge;
+    }
   }
   function isUnread(el) {
     return el.getElementsByClassName("qG").length > 0;
