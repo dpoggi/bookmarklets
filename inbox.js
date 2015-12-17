@@ -49,7 +49,7 @@
 
   function checkInbox() {
     var items, count;
-    items = Array.from(document.getElementsByClassName("top-level-item"));
+    items = Array.prototype.slice.call(document.getElementsByClassName("top-level-item"));
     count = items.filter(predicate).length;
     updateBadge(count >= 1 ? count : "");
   }
