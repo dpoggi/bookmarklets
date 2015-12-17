@@ -11,7 +11,12 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function() {
-  var els;
+  var onlyCheckUnread, els;
+
+  // If you want the dock badge to only count unread emails instead of
+  // all of them (Mailbox behavior), set this to true. I like it the
+  // Mailbox way.
+  onlyCheckUnread = false;
 
   // Since my Fluid app likes to capture Google Docs links no matter
   // what I do...
@@ -23,23 +28,47 @@
     window.fluid.dockBadge = badge;
   }
 
-  function checkInbox() {
-    var count, closedItems, i, openItems;
+  function isNotAttachment(el) {
+    var classNames;
+    classNames = el.className.replace(/[\t\r\n\f]/g, " ").split(" ");
+    return classNames.indexOf("kl") === -1;
+  }
+  function isUnread(el) {
+    return el.getElementsByClassName("qG").length > 0;
+  }
+  // Highly Scientific Naming (tm)
+  function predicateCombinerer() {
+    var args;
+    args = Array.prototype.slice.call(arguments);
+    return function(el) {
+      return args.map(function(p) { return p(el); }).indexOf(false) === -1;
+    };
+  }
 
-    count = 0;
+  function checkInbox() {
+    var predicate, count, closedItems, i, openItems;
+
+    if (onlyCheckUnread) {
+      predicate = predicateCombinerer(isNotAttachment, isUnread);
+    } else {
+      predicate = predicateCombinerer(isNotAttachment);
+    }
 
     // We have to use old-school for loops here or we'll get strange
     // elements in the NodeLists.
+    count = 0;
     closedItems = document.getElementsByClassName("jS");
     for (i = 0; i < closedItems.length; i++) {
-      if ((" " + closedItems[i].className + " ").indexOf(" kl ") === -1) {
+      if (predicate(closedItems[i])) {
         count += 1;
       }
     }
 
-    openItems = document.getElementsByClassName("mh");
-    for (i = 0; i < openItems.length; i++) {
-      count += 1;
+    if (!onlyCheckUnread) {
+      openItems = document.getElementsByClassName("mh");
+      for (i = 0; i < openItems.length; i++) {
+        count += 1;
+      }
     }
 
     if (count >= 1) {
