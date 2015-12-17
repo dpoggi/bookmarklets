@@ -11,12 +11,15 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function() {
-  var onlyCheckUnread, els;
+  var onlyCheckUnread, unreadIncludesPinned, predicate, pinnedPredicate, els;
 
   // If you want the dock badge to only count unread emails instead of
   // all of them (Mailbox behavior), set this to true. I like it the
   // Mailbox way.
   onlyCheckUnread = false;
+  // If ya set the above option to true, do you want that number to
+  // include messages you've pinned? Something tells me you might.
+  unreadIncludesPinned = true;
 
   // Since my Fluid app likes to capture Google Docs links no matter
   // what I do...
@@ -36,6 +39,9 @@
   function isUnread(el) {
     return el.getElementsByClassName("qG").length > 0;
   }
+  function isPinned(el) {
+    return el.getElementsByClassName("itemIconPinned").length > 0;
+  }
   // Highly Scientific Naming (tm)
   function predicateCombinerer() {
     var args;
@@ -45,14 +51,15 @@
     };
   }
 
-  function checkInbox() {
-    var predicate, count, closedItems, i, openItems;
+  if (onlyCheckUnread) {
+    predicate = predicateCombinerer(isNotAttachment, isUnread);
+  } else {
+    predicate = predicateCombinerer(isNotAttachment);
+  }
+  pinnedPredicate = predicateCombinerer(isNotAttachment, isPinned);
 
-    if (onlyCheckUnread) {
-      predicate = predicateCombinerer(isNotAttachment, isUnread);
-    } else {
-      predicate = predicateCombinerer(isNotAttachment);
-    }
+  function checkInbox() {
+    var count, closedItems, i, openItems;
 
     // We have to use old-school for loops here or we'll get strange
     // elements in the NodeLists.
@@ -60,6 +67,8 @@
     closedItems = document.getElementsByClassName("jS");
     for (i = 0; i < closedItems.length; i++) {
       if (predicate(closedItems[i])) {
+        count += 1;
+      } else if (unreadIncludesPinned && pinnedPredicate(closedItems[i])) {
         count += 1;
       }
     }
