@@ -28,7 +28,6 @@
   function updateBadge(badge) {
     window.fluid.dockBadge = badge;
   }
-
   function isUnread(el) {
     return el.getElementsByClassName("qG").length > 0;
   }
@@ -60,20 +59,19 @@
   }
 
   window.disconnectObserver();
+  updateBadge("");
   window.observer = new MutationObserver(function(mutations) {
     checkInbox();
   });
-  window.observerConfig = {
-    childList: true,
-    attributes: false,
-    characterData: false,
-    subtree: true,
-  };
 
-  updateBadge("");
   parentEl = document.getElementById("Nr");
   if (parentEl !== null) {
-    window.observer.observe(parentEl, window.observerConfig);
+    window.observer.observe(parentEl, {
+      childList: true,
+      attributes: false,
+      characterData: false,
+      subtree: true,
+    });
     checkInbox();
   } else {
     console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
