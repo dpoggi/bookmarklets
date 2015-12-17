@@ -9,15 +9,13 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function() {
-  var onlyCheckUnread, unreadIncludesPinned, predicate, parentEl;
+  var mode, predicate, parentEl;
 
-  // If you want the dock badge to only count unread emails instead of
-  // all of them (Mailbox behavior), set this to true. I like it the
-  // Mailbox way.
-  onlyCheckUnread = false;
-  // If ya set the above option to true, do you want that number to
-  // include messages you've pinned? Something tells me you might.
-  unreadIncludesPinned = true;
+  // MODES
+  // Mailbox           badge number = total messages
+  // Unread            badge number = unread messages
+  // UnreadWithPinned  badge number = unread or pinned messages
+  mode = "Mailbox";
 
   // Since my Fluid app likes to capture Google Docs links no matter
   // what I do...
@@ -35,13 +33,11 @@
     return el.getElementsByClassName("itemIconPinned").length > 0;
   }
 
-  if (onlyCheckUnread && unreadIncludesPinned) {
-    predicate = function(el) { return isUnread(el) || isPinned(el); };
-  } else if (onlyCheckUnread) {
-    predicate = isUnread;
-  } else {
-    predicate = function(el) { return true; };
-  }
+  predicate = {
+    "Mailbox":          function(el) { return true; },
+    "Unread":           isUnread,
+    "UnreadWithPinned": function(el) { return isUnread(el) || isPinned(el); },
+  }[mode];
 
   function checkInbox() {
     var items, count;
