@@ -1,9 +1,7 @@
 // inbox.js -- update Fluid app dock badge for Google Inbox
 //
-// *NOT A BOOKMARKLET*, also written in archaic Safari <9 JS,
-// because Fluid isn't really maintained anymore and for some
-// reason things that should be available in Safari 9 just aren't
-// available (looking at you, Array.from).
+// *NOT A BOOKMARKLET*, requires Safari >= 9 for proper WebKit
+// to be used with Fluid.
 //
 // Copyright (C) 2015 Dan Poggi
 //
@@ -11,7 +9,7 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function() {
-  var onlyCheckUnread, unreadIncludesPinned, predicate, pinnedPredicate, els;
+  var onlyCheckUnread, unreadIncludesPinned, predicate, parentEl;
 
   // If you want the dock badge to only count unread emails instead of
   // all of them (Mailbox behavior), set this to true. I like it the
@@ -31,54 +29,26 @@
     window.fluid.dockBadge = badge;
   }
 
-  function isNotAttachment(el) {
-    var classNames;
-    classNames = el.className.replace(/[\t\r\n\f]/g, " ").split(" ");
-    return classNames.indexOf("kl") === -1;
-  }
   function isUnread(el) {
     return el.getElementsByClassName("qG").length > 0;
   }
   function isPinned(el) {
     return el.getElementsByClassName("itemIconPinned").length > 0;
   }
-  // Highly Scientific Naming (tm)
-  function predicateCombinerer() {
-    var args;
-    args = Array.prototype.slice.call(arguments);
-    return function(el) {
-      return args.map(function(p) { return p(el); }).indexOf(false) === -1;
-    };
-  }
 
-  if (onlyCheckUnread) {
-    predicate = predicateCombinerer(isNotAttachment, isUnread);
+  if (onlyCheckUnread && unreadIncludesPinned) {
+    predicate = function(el) { return isUnread(el) || isPinned(el); };
+  } else if (onlyCheckUnread) {
+    predicate = isUnread;
   } else {
-    predicate = predicateCombinerer(isNotAttachment);
+    predicate = function(el) { return true; };
   }
-  pinnedPredicate = predicateCombinerer(isNotAttachment, isPinned);
 
   function checkInbox() {
-    var count, closedItems, i, openItems;
+    var items, count;
 
-    // We have to use old-school for loops here or we'll get strange
-    // elements in the NodeLists.
-    count = 0;
-    closedItems = document.getElementsByClassName("jS");
-    for (i = 0; i < closedItems.length; i++) {
-      if (predicate(closedItems[i])) {
-        count += 1;
-      } else if (unreadIncludesPinned && pinnedPredicate(closedItems[i])) {
-        count += 1;
-      }
-    }
-
-    if (!onlyCheckUnread) {
-      openItems = document.getElementsByClassName("mh");
-      for (i = 0; i < openItems.length; i++) {
-        count += 1;
-      }
-    }
+    items = Array.from(document.getElementsByClassName("top-level-item"));
+    count = items.filter(function(item) { return predicate(item); }).length;
 
     if (count >= 1) {
       updateBadge(count);
@@ -107,9 +77,10 @@
   };
 
   updateBadge("");
-  els = document.querySelectorAll(".yDSKFc.viy5Tb");
-  if (els.length >= 1) {
-    window.observer.observe(els[0], window.observerConfig);
+
+  parentEl = document.getElementById("Nr");
+  if (parentEl !== null) {
+    window.observer.observe(parentEl, window.observerConfig);
     checkInbox();
   } else {
     console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
