@@ -46,15 +46,9 @@
 
   function checkInbox() {
     var items, count;
-
     items = Array.from(document.getElementsByClassName("top-level-item"));
     count = items.filter(function(item) { return predicate(item); }).length;
-
-    if (count >= 1) {
-      updateBadge(count);
-    } else {
-      updateBadge("");
-    }
+    updateBadge(count >= 1 ? count : "");
   }
 
   if (typeof window.disconnectObserver !== "function") {
@@ -77,7 +71,6 @@
   };
 
   updateBadge("");
-
   parentEl = document.getElementById("Nr");
   if (parentEl !== null) {
     window.observer.observe(parentEl, window.observerConfig);
