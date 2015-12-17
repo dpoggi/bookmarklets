@@ -9,7 +9,7 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function() {
-  var mode, predicate, parentEl;
+  var mode, parentElement, predicate;
 
   // MODES
   // Mailbox           badge number = total messages
@@ -20,6 +20,12 @@
   // Since my Fluid app likes to capture Google Docs links no matter
   // what I do...
   if (window.location.host.indexOf("inbox.google.com") === -1) {
+    return;
+  }
+
+  parentElement = document.getElementById("Nr");
+  if (parentElement === null) {
+    console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
     return;
   }
 
@@ -34,7 +40,7 @@
   }
 
   predicate = {
-    "Mailbox":          function(el) { return true; },
+    "Mailbox":          function() { return true; },
     "Unread":           isUnread,
     "UnreadWithPinned": function(el) { return isUnread(el) || isPinned(el); },
   }[mode];
@@ -47,8 +53,8 @@
   }
 
   if (typeof window.disconnectObserver !== "function") {
-    window.disconnectObserver = function(event) {
-      if (typeof window.observer !== "undefined") {
+    window.disconnectObserver = function() {
+      if (typeof window.observer === "object") {
         window.observer.disconnect();
       }
     }
@@ -56,22 +62,17 @@
 
   window.disconnectObserver();
   updateBadge("");
-  window.observer = new MutationObserver(function(mutations) {
+  checkInbox();
+
+  window.observer = new MutationObserver(function() {
     checkInbox();
   });
-
-  parentEl = document.getElementById("Nr");
-  if (parentEl !== null) {
-    window.observer.observe(parentEl, {
-      childList: true,
-      attributes: false,
-      characterData: false,
-      subtree: true,
-    });
-    checkInbox();
-  } else {
-    console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
-  }
+  window.observer.observe(parentElement, {
+    childList: true,
+    attributes: false,
+    characterData: false,
+    subtree: true,
+  });
 
   // For some hope of dock badge predictability when handling multiple
   // tabs (multiple Gmail accounts).
