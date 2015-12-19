@@ -59,11 +59,11 @@
       if (typeof window.observer === "object") {
         window.observer.disconnect();
       }
+      updateBadge("");
     }
   }
 
   window.disconnectObserver();
-  updateBadge("");
   checkInbox();
 
   window.observer = new MutationObserver(function() {
