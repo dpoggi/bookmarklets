@@ -60,7 +60,7 @@
         window.observer.disconnect();
       }
       updateBadge("");
-    }
+    };
   }
 
   window.disconnectObserver();
