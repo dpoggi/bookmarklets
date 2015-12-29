@@ -1,4 +1,3 @@
 *.DS_Store
 *.browser.js
-Gemfile.lock
 node_modules/

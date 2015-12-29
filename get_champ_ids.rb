@@ -6,10 +6,10 @@
 # This software may be modified and distributed under the terms
 # of the MIT license. See the LICENSE file for details.
 
-require 'bundler/setup'
-require 'rest-client'
+require 'net/http'
+require 'json'
 
-data = RestClient.get('http://www.mobafire.com/league-of-legends/champions').body
+data = Net::HTTP.get('www.mobafire.com', '/league-of-legends/champions')
 regexp = /\/champion\/([a-z\-]*)-(\d{1,3})/
 matches = data.scan(regexp).map do |match|
   [match[0].gsub('-', ' '), match[1].to_i]
