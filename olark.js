@@ -6,7 +6,7 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function () {
-  if (typeof(olark) !== "undefined") {
+  if (typeof olark !== "undefined") {
     olark("api.box.hide");
   }
 })();

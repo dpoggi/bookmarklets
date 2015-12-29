@@ -9,8 +9,9 @@
   var href;
   if (window.location.host.indexOf("nytimes.com") === -1) return;
 
+  href = window.location.href;
   if (window.location.search.length > 0) {
-    href = window.location.href.replace(window.location.search, "");
+    href = href.replace(window.location.search, "");
   }
   window.location.href = href + "?nl=todaysheadlines";
 })();

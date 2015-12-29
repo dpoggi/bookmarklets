@@ -6,11 +6,11 @@
 // of the MIT license. See the LICENSE file for details.
 
 (function () {
-  var champIDs, champName;
+  var name, key, id;
 
   // In the event of new champions, get_champ_ids.rb will generate
   // an up-to-date version of this object.
-  champIDs = {
+  const champIds = {
     "aatrox": 114,
     "ahri": 89,
     "akali": 50,
@@ -141,15 +141,22 @@
     "zyra": 101
   };
 
-  function champURL(name) {
-    var champID;
-
-    champID = champIDs[name.toLowerCase().replace(/[^a-z ]/, "")];
-    return "http://www.mobafire.com/league-of-legends/browse?sort_type=score_weighted&sort_order=&champion_id=" + champID + "&lane=&role=&map=&guide_type=&threshold=all&freshness=S6&author=";
+  function champKey(name) {
+    return name.toLowerCase().replace(/[^a-z ]/g, "");
+  }
+  function champUrl(id) {
+    return "http://www.mobafire.com/league-of-legends/browse?sort_type=score_weighted&sort_order=&champion_id=" + id + "&lane=&role=&map=&guide_type=&threshold=all&freshness=S6&author=";
   }
 
   // Will jump directly to top rated guides/builds, Season 6 only, for
   // a given champion. Saves 4-5 page loads depending where you're at.
-  champName = prompt("Enter champion name:");
-  window.location.href = champURL(champName);
+  name = prompt("Enter champion name:");
+  if (name !== null && name !== "") {
+    key = champKey(name);
+    id = champIds[key];
+
+    if (typeof id !== "undefined") {
+      window.location.href = champURL(champName);
+    }
+  }
 })();
