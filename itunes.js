@@ -14,21 +14,22 @@
   ];
 
   function elContent(selector) {
-    var els = Array.from(document.querySelectorAll(selector));
+    let els = Array.from(document.querySelectorAll(selector));
     return els.map( el => el.textContent );
   }
 
-  var names = elContent("td.name span.text").filter((name) => {
-    var truths = badNames.map( badName => name.indexOf(badName) === -1 );
+  let names = elContent("td.name span.text").filter((name) => {
+    let truths = badNames.map( badName => name.indexOf(badName) === -1 );
     return truths.indexOf(false) === -1;
   });
-  var artists = elContent("td.artist span.text").slice(0, names.length);
+  let artists = elContent("td.artist span.text").slice(0, names.length);
 
-  var tracks = names.map((_, i) => {
-    var s = (i + 1).toString();
-    var trackNum = "0".repeat(3 - s.length) + s;
+  let tracks = names.map((_, i) => {
+    let s = (i + 1).toString();
+    let trackNum = "0".repeat(3 - s.length) + s;
     return trackNum + " " + artists[i] + " - " + names[i];
   });
+
   window.trackList = tracks.join("\n");
   console.log(window.trackList);
 })();
