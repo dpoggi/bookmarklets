@@ -156,7 +156,7 @@
     id = champIds[key];
 
     if (typeof id !== "undefined") {
-      window.location.href = champURL(champName);
+      window.location.href = champUrl(champName);
     }
   }
 })();
