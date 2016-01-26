@@ -5,9 +5,11 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-(function () {
+(function() {
   var href;
-  if (window.location.host.indexOf("nytimes.com") === -1) return;
+  if (window.location.host.indexOf("nytimes.com") === -1) {
+    return;
+  }
 
   href = window.location.href;
   if (window.location.search.length > 0) {

@@ -5,8 +5,8 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-(function () {
-  var name, key, id;
+(function() {
+  var champName, key, champId;
 
   // In the event of new champions, get_champ_ids.rb will generate
   // an up-to-date version of this object.
@@ -138,7 +138,7 @@
     "zed": 107,
     "ziggs": 92,
     "zilean": 17,
-    "zyra": 101
+    "zyra": 101,
   };
 
   function champKey(name) {
@@ -150,13 +150,13 @@
 
   // Will jump directly to top rated guides/builds, Season 6 only, for
   // a given champion. Saves 4-5 page loads depending where you're at.
-  name = prompt("Enter champion name:");
-  if (name !== null && name !== "") {
-    key = champKey(name);
-    id = champIds[key];
+  champName = prompt("Enter champion name:");
+  if (champName !== null && champName !== "") {
+    key = champKey(champName);
+    champId = champIds[key];
 
-    if (typeof id !== "undefined") {
-      window.location.href = champUrl(id);
+    if (typeof champId !== "undefined") {
+      window.location.href = champUrl(champId);
     }
   }
 })();

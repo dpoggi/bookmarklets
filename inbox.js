@@ -42,9 +42,13 @@
   }
 
   predicate = {
-    "Mailbox":          function() { return true; },
-    "Unread":           isUnread,
-    "UnreadWithPinned": function(el) { return isUnread(el) || isPinned(el); },
+    "Mailbox": function() {
+      return true;
+    },
+    "Unread": isUnread,
+    "UnreadWithPinned": function(el) {
+      return isUnread(el) || isPinned(el);
+    },
   }[mode];
 
   function checkInbox() {

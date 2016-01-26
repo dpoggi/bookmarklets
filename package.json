@@ -11,5 +11,9 @@
   "private": true,
   "dependencies": {
     "prettydiff": "*"
+  },
+  "devDependencies": {
+    "eslint": "*",
+    "eslint-config-idiomatic": "*"
   }
 }

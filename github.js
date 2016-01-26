@@ -7,7 +7,9 @@
 
 (function() {
   var org, substr, els;
-  if (window.location.host.indexOf("github.com") === -1) return;
+  if (window.location.host.indexOf("github.com") === -1) {
+    return;
+  }
 
   org = prompt("Organization:");
   substr = prompt("Substring:");

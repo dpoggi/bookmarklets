@@ -1,6 +1,7 @@
 NPM		= npm
 MIN		= ./node_modules/.bin/prettydiff
 MINFLAGS	= mode:"minify" readmethod:"filescreen"
+LINT		= ./node_modules/.bin/eslint
 PREFIX		= printf "javascript:"
 PB		= ./copy_to_clipboard.sh
 RM		= rm -f
@@ -24,3 +25,7 @@ clean:
 .PHONY:		setup
 setup:
 	$(NPM) install
+
+.PHONY:		lint
+lint:
+	$(LINT) --no-color .
