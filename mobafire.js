@@ -53,6 +53,7 @@
     "jarvan iv": 71,
     "jax": 15,
     "jayce": 100,
+    "jhin": 129,
     "jinx": 116,
     "kalista": 122,
     "karma": 69,
