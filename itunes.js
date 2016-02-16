@@ -16,13 +16,16 @@
   ];
 
   function elContent(selector) {
-    let els = Array.from(document.querySelectorAll(selector));
-    return els.map(el => el.textContent);
+    return Array.from(document.querySelectorAll(selector))
+                .map(el => el.textContent);
   }
 
+  let album = document.querySelector("div#title h1").textContent;
+  let albumArtist = document.querySelector("div#title h2").textContent;
+  let releaseDate = document.querySelectorAll("li.release-date span")[1].textContent;
+
   let names = elContent("td.name span.text").filter((name) => {
-    let truths = badNames.map(badName => name.indexOf(badName) === -1);
-    return truths.indexOf(false) === -1;
+    return !badNames.map(badName => !name.includes(badName)).includes(false);
   });
   let artists = elContent("td.artist span.text").slice(0, names.length);
 
@@ -32,6 +35,9 @@
     return trackNum + " " + artists[i] + " - " + names[i];
   });
 
-  window.trackList = tracks.join("\n");
+  window.trackList = album + "\n"
+                     + albumArtist + "\n"
+                     + releaseDate + "\n\n"
+                     + tracks.join("\n");
   console.log(window.trackList);
 })();
