@@ -25,7 +25,7 @@
   let releaseDate = document.querySelectorAll("li.release-date span")[1].textContent;
 
   let names = elContent("td.name span.text").filter((name) => {
-    return badNames.map(badName => name.includes(badName)).includes(true);
+    return !badNames.map(badName => name.includes(badName)).includes(true);
   });
   let artists = elContent("td.artist span.text").slice(0, names.length);
 
