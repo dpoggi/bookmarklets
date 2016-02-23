@@ -25,6 +25,7 @@ clean:
 .PHONY:		setup
 setup:
 	$(NPM) install
+	./patch_prettydiff.sh
 
 .PHONY:		lint
 lint:
