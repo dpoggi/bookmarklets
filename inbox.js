@@ -32,7 +32,7 @@ var dockBadgeMode = "Mailbox";
     updateBadge("");
   }
 
-  function checkInbox() {
+  function checkInbox(predicate) {
     var items, count;
     items = [].slice.call(document.getElementsByClassName("top-level-item"));
     count = items.filter(predicate).length;
@@ -70,10 +70,10 @@ var dockBadgeMode = "Mailbox";
   }[mode];
 
   disconnectObserver();
-  checkInbox();
+  checkInbox(predicate);
 
   window.observer = new MutationObserver(function() {
-    checkInbox();
+    checkInbox(predicate);
   });
   window.observer.observe(parentElement, {
     childList: true,
