@@ -8,14 +8,44 @@
 // This software may be modified and distributed under the terms
 // of the MIT license. See the LICENSE file for details.
 
-(function() {
-  var mode, parentElement, predicate;
+// Dock Badge Modes
+//
+// Mailbox           badge number = total messages
+// Unread            badge number = unread messages
+// UnreadWithPinned  badge number = unread or pinned messages
+//
+var dockBadgeMode = "Mailbox";
 
-  // MODES
-  // Mailbox           badge number = total messages
-  // Unread            badge number = unread messages
-  // UnreadWithPinned  badge number = unread or pinned messages
-  mode = "Mailbox";
+(function(mode) {
+  var parentElement, predicate;
+
+  function updateBadge(badge) {
+    if (typeof window.fluid !== "undefined") {
+      window.fluid.dockBadge = badge;
+    }
+  }
+
+  function disconnectObserver() {
+    if (typeof window.observer === "object") {
+      window.observer.disconnect();
+    }
+    updateBadge("");
+  }
+
+  function checkInbox() {
+    var items, count;
+    items = [].slice.call(document.getElementsByClassName("top-level-item"));
+    count = items.filter(predicate).length;
+    updateBadge(count >= 1 ? count : "");
+  }
+
+  function isUnread(el) {
+    return el.getElementsByClassName("qG").length > 0;
+  }
+
+  function isPinned(el) {
+    return el.getElementsByClassName("itemIconPinned").length > 0;
+  }
 
   // Since my Fluid app likes to capture Google Docs links no matter
   // what I do...
@@ -29,18 +59,6 @@
     return;
   }
 
-  function updateBadge(badge) {
-    if (typeof window.fluid !== "undefined") {
-      window.fluid.dockBadge = badge;
-    }
-  }
-  function isUnread(el) {
-    return el.getElementsByClassName("qG").length > 0;
-  }
-  function isPinned(el) {
-    return el.getElementsByClassName("itemIconPinned").length > 0;
-  }
-
   predicate = {
     "Mailbox": function() {
       return true;
@@ -51,23 +69,7 @@
     },
   }[mode];
 
-  function checkInbox() {
-    var items, count;
-    items = Array.prototype.slice.call(document.getElementsByClassName("top-level-item"));
-    count = items.filter(predicate).length;
-    updateBadge(count >= 1 ? count : "");
-  }
-
-  if (typeof window.disconnectObserver !== "function") {
-    window.disconnectObserver = function() {
-      if (typeof window.observer === "object") {
-        window.observer.disconnect();
-      }
-      updateBadge("");
-    };
-  }
-
-  window.disconnectObserver();
+  disconnectObserver();
   checkInbox();
 
   window.observer = new MutationObserver(function() {
@@ -82,8 +84,8 @@
 
   // For some hope of dock badge predictability when handling multiple
   // tabs (multiple Gmail accounts).
-  window.removeEventListener("beforeunload", window.disconnectObserver);
-  window.addEventListener("beforeunload", window.disconnectObserver);
-  window.removeEventListener("unload", window.disconnectObserver);
-  window.addEventListener("unload", window.disconnectObserver);
-})();
+  window.removeEventListener("beforeunload", disconnectObserver);
+  window.addEventListener("beforeunload", disconnectObserver);
+  window.removeEventListener("unload", disconnectObserver);
+  window.addEventListener("unload", disconnectObserver);
+})(dockBadgeMode);
