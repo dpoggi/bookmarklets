@@ -19,6 +19,7 @@
     "anivia": 25,
     "annie": 1,
     "ashe": 13,
+    "aurelion sol": 130,
     "azir": 121,
     "bard": 124,
     "blitzcrank": 34,
@@ -139,7 +140,7 @@
     "zed": 107,
     "ziggs": 92,
     "zilean": 17,
-    "zyra": 101,
+    "zyra": 101
   };
 
   function champKey(name) {
