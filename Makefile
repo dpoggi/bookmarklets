@@ -8,7 +8,9 @@ RM		= rm -f
 
 TARGET	= $(patsubst %.js,%.browser.js,$(shell ls *.js | grep -v '\.browser\.js$$'))
 
-.PHONY:		all
+.PHONY:		all clean lint
+.NOTPARALLEL:	all
+
 all:		$(TARGET)
 
 %.browser.js:	%.js
@@ -18,15 +20,8 @@ all:		$(TARGET)
 %:		%.browser.js
 	$(PB) "$*.browser.js"
 
-.PHONY:		clean
 clean:
 	$(RM) $(TARGET)
 
-.PHONY:		setup
-setup:
-	$(NPM) install
-	./patch_prettydiff.sh
-
-.PHONY:		lint
 lint:
 	$(LINT) --no-color .

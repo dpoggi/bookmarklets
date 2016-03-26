@@ -140,7 +140,7 @@
     "zed": 107,
     "ziggs": 92,
     "zilean": 17,
-    "zyra": 101
+    "zyra": 101,
   };
 
   function champKey(name) {

@@ -32,10 +32,10 @@ var dockBadgeMode = "Mailbox";
     updateBadge("");
   }
 
-  function checkInbox(predicate) {
+  function checkInbox(pred) {
     var items, count;
     items = [].slice.call(document.getElementsByClassName("top-level-item"));
-    count = items.filter(predicate).length;
+    count = items.filter(pred).length;
     updateBadge(count >= 1 ? count : "");
   }
 
