@@ -3,17 +3,24 @@
   "version": "1.0.0",
   "description": "Muh bookmarklets.",
   "author": "Dan Poggi <dan.poggi@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "homepage": "https://github.com/dpoggi/bookmarklets",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpoggi/bookmarklets"
+    "url": "https://github.com/dpoggi/bookmarklets.git"
   },
-  "license": "MIT",
-  "private": true,
+  "bugs": {
+    "url": "https://github.com/dpoggi/bookmarklets/issues"
+  },
   "dependencies": {
     "prettydiff": "*"
   },
   "devDependencies": {
     "eslint": "*",
     "eslint-config-idiomatic": "*"
-  }
+  },
+  "private": true
 }
