@@ -2,7 +2,7 @@
   var node, range;
 
   node = window.getSelection().anchorNode;
-  while (node.tagName !== "PRE") {
+  while (node.tagName !== "PRE" && node.tagName !== "DIV") {
     node = node.parentElement;
   }
 
