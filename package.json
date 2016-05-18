@@ -15,12 +15,10 @@
   "bugs": {
     "url": "https://github.com/dpoggi/bookmarklets/issues"
   },
-  "dependencies": {
-    "prettydiff": "*"
-  },
   "devDependencies": {
     "eslint": "*",
-    "eslint-config-idiomatic": "*"
+    "eslint-config-idiomatic": "*",
+    "prettydiff": "*"
   },
   "private": true
 }

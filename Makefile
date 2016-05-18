@@ -1,6 +1,6 @@
 NPM		= npm
 MIN		= ./node_modules/.bin/prettydiff
-MINFLAGS	= mode:"minify" readmethod:"filescreen"
+MINFLAGS	= lang:"javascript" mode:"minify" readmethod:"filescreen"
 PREFIX		= printf "javascript:"
 PB		= ./copy_to_clipboard.sh
 RM		= rm -rf
