@@ -1,5 +1,5 @@
 NPM		= npm
-MIN		= ./node_modules/.bin/prettydiff
+MIN		= node_modules/.bin/prettydiff
 MINFLAGS	= lang:"javascript" mode:"minify" readmethod:"filescreen"
 PREFIX		= printf "javascript:"
 PB		= ./copy_to_clipboard.sh

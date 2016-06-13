@@ -1,0 +1,26 @@
+{
+	"preset": "crockford",
+  "excludeFiles": ["*.browser.js"],
+  "disallowSpaceAfterKeywords": ["function"],
+  "disallowSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+  "disallowTrailingComma": false,
+  "requireSpaceAfterKeywords": [
+    "do", "for", "if", "else", "switch", "case", "try",
+    "catch", "void", "while", "with", "return", "typeof"
+  ],
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireTrailingComma": {
+    "ignoreSingleLine": true
+  },
+  "validateIndentation": 2
+}

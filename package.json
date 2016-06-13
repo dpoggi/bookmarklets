@@ -5,7 +5,9 @@
   "author": "Dan Poggi <dan.poggi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint ."
+    "build": "make",
+    "clean": "make clean",
+    "lint": "jscs ."
   },
   "homepage": "https://github.com/dpoggi/bookmarklets",
   "repository": {
@@ -16,9 +18,8 @@
     "url": "https://github.com/dpoggi/bookmarklets/issues"
   },
   "devDependencies": {
-    "eslint": "*",
-    "eslint-config-idiomatic": "*",
-    "prettydiff": "*"
+    "jscs": "^3.0.4",
+    "prettydiff": "^99.0.1"
   },
   "private": true
 }
