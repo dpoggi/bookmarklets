@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+#
 # get_champ_ids.rb -- scrape Mobafire for champion name -> ID mapping
 #
 # Copyright (C) 2015 Dan Poggi
@@ -17,7 +18,7 @@ end
 
 $stdout.write(JSON.pretty_generate(Hash[matches]))
 if $stdout.tty?
-  $stderr.puts "\n\nGreat success! Pipe to ./copy_to_clipboard.sh to copy champion IDs as JSON."
+  $stderr.puts "\n\nSuccess! Pipe to scripts/copy_to_pasteboard.sh to copy champion IDs as JSON."
 else
-  $stderr.puts "Great success! Check the clipboard!"
+  $stderr.puts "Success! Check the clipboard!"
 end

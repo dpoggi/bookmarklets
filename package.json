@@ -5,9 +5,9 @@
   "author": "Dan Poggi <dan.poggi@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "make",
-    "clean": "make clean",
-    "lint": "jscs ."
+    "clean": "gulp clean",
+    "compile": "gulp",
+    "lint": "gulp lint"
   },
   "homepage": "https://github.com/dpoggi/bookmarklets",
   "repository": {
@@ -18,8 +18,12 @@
     "url": "https://github.com/dpoggi/bookmarklets/issues"
   },
   "devDependencies": {
-    "jscs": "^3.0.4",
-    "prettydiff": "^99.0.1"
+    "gulp": "^3.9.1",
+    "gulp-changed": "^1.3.2",
+    "gulp-inject-string": "^1.1.0",
+    "gulp-jscs": "^4.0.0",
+    "gulp-prettydiff": "^1.0.1",
+    "gulp-rimraf": "^0.2.0"
   },
   "private": true
 }
