@@ -20,7 +20,7 @@ var dockBadgeMode = "Mailbox";
   var parentElement, predicate;
 
   function updateBadge(badge) {
-    if (typeof window.fluid !== "undefined") {
+    if (window.fluid != null) {
       window.fluid.dockBadge = badge;
     }
   }
@@ -29,13 +29,17 @@ var dockBadgeMode = "Mailbox";
     if (typeof window.observer === "object") {
       window.observer.disconnect();
     }
+
     updateBadge("");
   }
 
-  function checkInbox(pred) {
+  function checkInbox(predicate) {
     var items, count;
+
     items = [].slice.call(document.getElementsByClassName("top-level-item"));
-    count = items.filter(pred).length;
+
+    count = items.filter(predicate).length;
+
     updateBadge(count >= 1 ? count : "");
   }
 
@@ -54,38 +58,48 @@ var dockBadgeMode = "Mailbox";
   }
 
   parentElement = document.getElementById("Nr");
+
   if (parentElement === null) {
     console.log("USERSCRIPT: Couldn't find parent element, dock badging disabled!");
     return;
   }
 
-  predicate = {
-    "Mailbox": function() {
-      return true;
-    },
-    "Unread": isUnread,
-    "UnreadWithPinned": function(el) {
-      return isUnread(el) || isPinned(el);
-    },
-  }[mode];
+  switch (mode) {
+  case "Mailbox":
+    predicate = function() { return true; };
+    break;
+  case "Unread":
+    predicate = isUnread;
+    break;
+  case "UnreadWithPinned":
+    predicate = function(el) { return isUnread(el) || isPinned(el); };
+    break;
+  default:
+    console.log("USERSCRIPT: Invalid mode " + mode);
+    return;
+  }
 
   disconnectObserver();
+
   checkInbox(predicate);
 
   window.observer = new MutationObserver(function() {
     checkInbox(predicate);
   });
+
   window.observer.observe(parentElement, {
     childList: true,
     attributes: false,
     characterData: false,
-    subtree: true,
+    subtree: true
   });
 
   // For some hope of dock badge predictability when handling multiple
   // tabs (multiple Gmail accounts).
+
   window.removeEventListener("beforeunload", disconnectObserver);
   window.addEventListener("beforeunload", disconnectObserver);
+
   window.removeEventListener("unload", disconnectObserver);
   window.addEventListener("unload", disconnectObserver);
 })(dockBadgeMode);
