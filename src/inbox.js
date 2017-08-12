@@ -65,18 +65,18 @@ var dockBadgeMode = "Mailbox";
   }
 
   switch (mode) {
-  case "Mailbox":
-    predicate = function() { return true; };
-    break;
-  case "Unread":
-    predicate = isUnread;
-    break;
-  case "UnreadWithPinned":
-    predicate = function(el) { return isUnread(el) || isPinned(el); };
-    break;
-  default:
-    console.log("USERSCRIPT: Invalid mode " + mode);
-    return;
+    case "Mailbox":
+      predicate = function() { return true; };
+      break;
+    case "Unread":
+      predicate = isUnread;
+      break;
+    case "UnreadWithPinned":
+      predicate = function(el) { return isUnread(el) || isPinned(el); };
+      break;
+    default:
+      console.log("USERSCRIPT: Invalid mode " + mode);
+      return;
   }
 
   disconnectObserver();
@@ -91,7 +91,7 @@ var dockBadgeMode = "Mailbox";
     childList: true,
     attributes: false,
     characterData: false,
-    subtree: true
+    subtree: true,
   });
 
   // For some hope of dock badge predictability when handling multiple
