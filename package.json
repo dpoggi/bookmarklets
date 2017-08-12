@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "clean": "gulp clean",
-    "compile": "gulp",
-    "lint": "gulp lint"
+    "lint": "gulp lint",
+    "build": "gulp build"
   },
   "homepage": "https://github.com/dpoggi/bookmarklets",
   "repository": {
