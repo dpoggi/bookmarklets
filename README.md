@@ -14,7 +14,7 @@ gulp
 
 * The Mobafire script relies on a JS object mapping champion names to IDs.
   To scrape an updated copy of this object and copy it to the clipboard,
-  run `scripts/get_champ_ids.rb | scripts/copy_to_pasteboard.sh`.
+  run `scripts/scrape_champ_ids.js | scripts/pbcopy.sh`.
 
 ## Copyright
 

@@ -8,7 +8,7 @@
 (function() {
   var champName, key, champId;
 
-  // In the event of new champions, get_champ_ids.rb will generate
+  // In the event of new champions, scripts/scrape_champ_ids.js will generate
   // an up-to-date version of this object.
   const champIds = {
     "aatrox": 114,
