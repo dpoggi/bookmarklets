@@ -21,7 +21,7 @@ gulp.task("lint", () => {
       .pipe(jscs.reporter());
 });
 
-gulp.task("build", () => {
+gulp.task("build", ["lint"], () => {
   return gulp.src(sourcesGlob)
       .pipe(changed(buildDir))
       .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
