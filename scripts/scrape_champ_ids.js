@@ -11,7 +11,7 @@
 
 const https = require("https");
 
-https.get("https://www.mobafire.com/league-of-legends/champions", (response) => {
+https.get("https://www.mobafire.com/league-of-legends/champions", response => {
   const { statusCode } = response;
   const contentType = response.headers["content-type"];
 
@@ -28,22 +28,22 @@ https.get("https://www.mobafire.com/league-of-legends/champions", (response) => 
   response.on("data", chunk => { html += chunk; });
 
   response.on("end", () => {
-    const champions = {};
+    const ids = {};
     const re = /\/champion\/([a-z\-]+)-(\d{1,3})/g;
 
     for (let match = re.exec(html); match != null; match = re.exec(html)) {
       const name = match[1].replace("-", " ");
       const id = Number.parseInt(match[2]);
 
-      champions[name] = id;
+      ids[name] = id;
     }
 
-    process.stdout.write(JSON.stringify(champions, undefined, 2));
+    process.stdout.write(JSON.stringify(ids, undefined, 2));
 
     if (process.stdout.isTTY) {
-      console.error("\n\nSuccess! Pipe to scripts/pbcopy.sh to copy champion IDs as JSON.");
+      console.error("\n\nSuccess! Redirect (>>) to src/mobafire.js to append champ IDs.");
     } else {
-      console.error("Success! Check the clipboard!");
+      console.error("Success! Check mobafire.js!");
     }
   });
 });
