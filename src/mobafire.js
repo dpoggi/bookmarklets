@@ -92,6 +92,7 @@
     "nunu": 12,
     "olaf": 53,
     "orianna": 77,
+    "ornn": 139,
     "pantheon": 44,
     "poppy": 43,
     "quinn": 111,
