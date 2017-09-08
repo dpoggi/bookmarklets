@@ -8,9 +8,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-const http = require("http");
+const https = require("https");
 
-http.get("http://www.mobafire.com/league-of-legends/champions", (response) => {
+https.get("https://www.mobafire.com/league-of-legends/champions", (response) => {
   const { statusCode } = response;
   const contentType = response.headers["content-type"];
 
