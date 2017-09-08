@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+"use strict";
 /*
  * scrape_champ_ids.js -- scrape Mobafire for champion name -> ID mapping
  *
@@ -24,11 +25,11 @@ https.get("https://www.mobafire.com/league-of-legends/champions", (response) => 
 
   response.setEncoding("utf8");
 
-  response.on("data", (chunk) => { html += chunk; });
+  response.on("data", chunk => { html += chunk; });
 
   response.on("end", () => {
     const champions = {};
-    const re = /\/champion\/([a-z\-]*)-(\d{1,3})/g;
+    const re = /\/champion\/([a-z\-]+)-(\d{1,3})/g;
 
     for (let match = re.exec(html); match != null; match = re.exec(html)) {
       const name = match[1].replace("-", " ");
