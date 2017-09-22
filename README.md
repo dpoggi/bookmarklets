@@ -12,15 +12,18 @@ https://files.danpoggi.com/bookmarklets/
 ## Getting Started
 
 ```sh
-npm i -g gulp
 yarn
-gulp
+npm run build
 ```
 
 * The Mobafire script relies on a JS object mapping champion names to IDs.
   To scrape an updated copy of this object and append it to `mobafire.js`,
   run `scripts/scrape_champ_ids.js >>src/mobafire.js`.
 
+## License
+
+[MIT License](https://opensource.org/licenses/MIT)
+
 ## Copyright
 
-Copyright (C) 2017 Dan Poggi. MIT License, see LICENSE for details.
+Copyright &copy; 2016&ndash;2017 Dan Poggi

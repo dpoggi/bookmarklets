@@ -1,7 +1,7 @@
 {
   "name": "bookmarklets",
   "version": "1.0.0",
-  "description": "Muh bookmarklets.",
+  "description": "Browser bookmarklets",
   "author": "Dan Poggi <dan.poggi@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,7 @@
   "homepage": "https://github.com/dpoggi/bookmarklets",
   "repository": {
     "type": "git",
-    "url": "https://github.com/dpoggi/bookmarklets.git"
+    "url": "https://github.com/dpoggi/bookmarklets"
   },
   "bugs": {
     "url": "https://github.com/dpoggi/bookmarklets/issues"
