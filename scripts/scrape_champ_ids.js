@@ -43,7 +43,7 @@ https.get("https://www.mobafire.com/league-of-legends/champions", response => {
     if (process.stdout.isTTY) {
       console.error("\n\nSuccess! Redirect (>>) to src/mobafire.js to append champ IDs.");
     } else {
-      console.error("Success! Check mobafire.js!");
+      console.error("Success! Check src/mobafire.js!");
     }
   });
 });
