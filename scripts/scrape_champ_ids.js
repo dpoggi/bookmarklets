@@ -9,43 +9,101 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
+const fs = require("fs");
 const https = require("https");
+const readline = require("readline");
+const { URL } = require("url");
 
-https.get("https://www.mobafire.com/league-of-legends/champions", (response) => {
-  const { statusCode } = response;
-  const contentType = response.headers["content-type"];
+const srcPath = (() => {
+  const path = require("path");
+  const projectDir = path.resolve(process.mainModule.filename, "..", "..");
+  return path.join(projectDir, "src", "mobafire.js");
+})();
 
-  if (statusCode < 200 || statusCode >= 300) {
-    throw new Error(`HTTP request failed (or redirected) with status ${statusCode}`);
-  } else if (!/text\/html/.test(contentType)) {
-    throw new Error(`HTTP request failed with invalid Content-Type ${contentType}`);
-  }
+function fetchHtml(path, baseUrl) {
+  return new Promise((resolve, reject) => {
+    https.get(new URL(path, baseUrl), (response) => {
+      if (response.statusCode < 200 || response.statusCode >= 300) {
+        reject("HTTP " + response.statusCode + " " + response.statusMessage);
+        return;
+      }
+      if (!/text\/html/.test(response.headers["content-type"])) {
+        reject(`Invalid Content-Type ${response.headers["content-type"]}`);
+        return;
+      }
 
-  let html = "";
+      let html = "";
 
-  response.setEncoding("utf8");
+      response.setEncoding("utf8");
+      response.on("readable", () => { html += response.read(); });
+      response.on("end", () => { resolve(html); });
+    });
+  });
+}
 
-  response.on("data", (chunk) => { html += chunk; });
+function replaceChunk(options) {
+  const { path, beginPattern, endPattern, replacement } = options;
 
-  response.on("end", () => {
-    const ids = {};
-    const re = /\/champion\/([a-z\-]+)-(\d{1,3})/g;
+  const rl = readline.createInterface({
+    terminal: false,
+    historySize: 0,
+    prompt: "",
+    crlfDelay: Infinity,
+    input: fs.createReadStream(path)
+  });
 
-    for (let match = re.exec(html); match != null; match = re.exec(html)) {
-      const name = match[1].replace("-", " ");
-      const id = Number.parseInt(match[2]);
-
-      ids[name] = id;
+  let ignoreInput = false;
+  rl.on("line", (line) => {
+    if (beginPattern.test(line)) {
+      ignoreInput = true;
+      dest.write(replacement);
+      return;
+    } else if (ignoreInput && endPattern.test(line)) {
+      ignoreInput = false;
+      return;
+    } else if (ignoreInput) {
+      return;
     }
+    dest.write(line);
+    dest.write("\n");
+  })
+  .on("close", () => {
+    dest.end();
 
-    const json = JSON.stringify(ids, undefined, 4);
-    const declaration = `  ids = ${json.replace(/"([a-z]+)"/g, "$1").replace("}", "  };")}\n`;
-    process.stdout.write(declaration);
-
-    if (process.stdout.isTTY) {
-      console.error("\nSuccess! Redirect (>>) to src/mobafire.js to append champ IDs.");
-    } else {
-      console.error("Success! Check src/mobafire.js!");
+    if (fs.existsSync(paths.dest)) {
+      fs.unlinkSync(paths.src);
+      fs.linkSync(paths.dest, paths.src);
+      fs.unlinkSync(paths.dest);
     }
   });
-});
+}
+
+fetchHtml("/league-of-legends/champions", "https://www.mobafire.com")
+  .then((html) => {
+    const champIds = {};
+
+    const regexp = /\/champion\/([a-z\-]+)-(\d{1,3})/g;
+    for (let match = regexp.exec(html); match != null; match = regexp.exec(html)) {
+      const name = match[1].replace("-", " ");
+      const id = Number.parseInt(match[2]);
+      champIds[name] = id;
+    }
+
+    return champIds;
+  })
+  .then(champIds => JSON.stringify(champIds, undefined, 4))
+  .then(json => json.replace(/"([a-z]+)"/g, "$1").replace("}", "  }"))
+  .then(literal => `  ids = ${literal};\n`)
+  .then((expression) => {
+    console.log(expression);
+    // replaceChunk({
+    //   path: srcPath,
+    //   beginPattern: /ids = {$/,
+    //   endPattern: /};$/,
+    //   replacement: expression
+    // });
+  })
+  .then(() => { console.log("Success! Check src/mobafire.js!"); })
+  .catch((err) => {
+    throw new Error(err);
+  });
