@@ -12,7 +12,7 @@
 
   const badNames = [
     "Continuous Mix",
-    "Digital Booklet",
+    "Digital Booklet"
   ];
 
   function elContent(selector) {

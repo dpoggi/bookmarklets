@@ -91,7 +91,7 @@ var dockBadgeMode = "Mailbox";
     childList: true,
     attributes: false,
     characterData: false,
-    subtree: true,
+    subtree: true
   });
 
   // For some hope of dock badge predictability when handling multiple

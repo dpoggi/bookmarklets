@@ -148,7 +148,7 @@
     "zed": 107,
     "ziggs": 92,
     "zilean": 17,
-    "zyra": 101,
+    "zyra": 101
   };
 
   // Will jump directly to top rated guides/builds, Season 6 only, for

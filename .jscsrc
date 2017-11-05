@@ -8,7 +8,7 @@
   "disallowSpacesInAnonymousFunctionExpression": {
     "beforeOpeningRoundBrace": true
   },
-  "disallowTrailingComma": false,
+  "disallowTrailingComma": true,
   "requireBlocksOnNewline": false,
   "requireSpaceAfterKeywords": [
     "do", "for", "if", "else", "switch", "case", "try",
@@ -19,9 +19,6 @@
   },
   "requireSpacesInAnonymousFunctionExpression": {
     "beforeOpeningCurlyBrace": true
-  },
-  "requireTrailingComma": {
-    "ignoreSingleLine": true
   },
   "validateIndentation": 2
 }
