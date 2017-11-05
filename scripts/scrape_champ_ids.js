@@ -11,7 +11,7 @@
 
 const https = require("https");
 
-https.get("https://www.mobafire.com/league-of-legends/champions", response => {
+https.get("https://www.mobafire.com/league-of-legends/champions", (response) => {
   const { statusCode } = response;
   const contentType = response.headers["content-type"];
 
@@ -25,7 +25,7 @@ https.get("https://www.mobafire.com/league-of-legends/champions", response => {
 
   response.setEncoding("utf8");
 
-  response.on("data", chunk => { html += chunk; });
+  response.on("data", (chunk) => { html += chunk; });
 
   response.on("end", () => {
     const ids = {};
@@ -38,10 +38,12 @@ https.get("https://www.mobafire.com/league-of-legends/champions", response => {
       ids[name] = id;
     }
 
-    process.stdout.write(JSON.stringify(ids, undefined, 2));
+    const json = JSON.stringify(ids, undefined, 4);
+    const declaration = `  ids = ${json.replace(/"([a-z]+)"/g, "$1").replace("}", "  };")}\n`;
+    process.stdout.write(declaration);
 
     if (process.stdout.isTTY) {
-      console.error("\n\nSuccess! Redirect (>>) to src/mobafire.js to append champ IDs.");
+      console.error("\nSuccess! Redirect (>>) to src/mobafire.js to append champ IDs.");
     } else {
       console.error("Success! Check src/mobafire.js!");
     }
