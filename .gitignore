@@ -1,3 +1,4 @@
 *.DS_Store
+.nvmrc
 node_modules/
 build/
