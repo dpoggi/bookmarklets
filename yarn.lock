@@ -522,7 +522,7 @@ graceful-fs@~1.2.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
-gulp-changed@^3.1.0:
+gulp-changed@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/gulp-changed/-/gulp-changed-3.1.1.tgz#7cdd5621bacd29c9da151e27a70a8865dffc4415"
   dependencies:
@@ -555,7 +555,7 @@ gulp-prettydiff@^1.0.1:
     map-stream "0.0.5"
     prettydiff "^1.12.8"
 
-gulp-rimraf@^0.2.0:
+gulp-rimraf@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/gulp-rimraf/-/gulp-rimraf-0.2.1.tgz#9f1783adc5d4890d8a1bedf834bc989e2a565030"
   dependencies:
