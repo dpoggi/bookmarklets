@@ -15,8 +15,8 @@ https.get("https://www.mobafire.com/league-of-legends/champions", response => {
   const { statusCode } = response;
   const contentType = response.headers["content-type"];
 
-  if (statusCode !== 200) {
-    throw new Error(`HTTP request failed with status ${statusCode}`);
+  if (statusCode < 200 || statusCode >= 300) {
+    throw new Error(`HTTP request failed (or redirected) with status ${statusCode}`);
   } else if (!/text\/html/.test(contentType)) {
     throw new Error(`HTTP request failed with invalid Content-Type ${contentType}`);
   }
