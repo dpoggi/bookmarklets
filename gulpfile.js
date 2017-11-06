@@ -3,7 +3,7 @@
 const gulp = require("gulp");
 const changed = require("gulp-changed");
 const prettydiff = require("gulp-prettydiff");
-const inject = require("gulp-inject-string");
+const injectString = require("gulp-inject-string");
 const jscs = require("gulp-jscs");
 const rimraf = require("gulp-rimraf");
 
@@ -25,7 +25,7 @@ gulp.task("build", ["lint"], () => {
   return gulp.src(sourcesGlob)
       .pipe(changed(buildDir))
       .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
-      .pipe(inject.prepend("javascript:"))
+      .pipe(injectString.prepend("javascript:"))
       .pipe(gulp.dest(buildDir));
 });
 
