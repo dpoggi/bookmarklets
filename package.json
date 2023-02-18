@@ -6,7 +6,6 @@
   "license": "MIT",
   "scripts": {
     "clean": "gulp clean",
-    "lint": "gulp lint",
     "build": "gulp build"
   },
   "homepage": "https://github.com/dpoggi/bookmarklets",
@@ -18,12 +17,11 @@
     "url": "https://github.com/dpoggi/bookmarklets/issues"
   },
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-changed": "^3.1.1",
+    "gulp": "^4.0.2",
+    "gulp-changed": "^4.0.3",
     "gulp-inject-string": "^1.1.0",
-    "gulp-jscs": "^4.0.0",
-    "gulp-prettydiff": "^1.0.1",
-    "gulp-rimraf": "^0.2.1"
+    "gulp-prettydiff": "^2.0.0",
+    "gulp-rimraf": "^1.0.0"
   },
   "private": true
 }
