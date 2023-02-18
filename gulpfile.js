@@ -24,7 +24,7 @@ exports.build = () => {
     .pipe(dest(buildDir));
 };
 
-exports.buildHTML = () => {
+exports["build-html"] = () => {
   return gulp
     .src(sourcesGlob)
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
