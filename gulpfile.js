@@ -1,7 +1,6 @@
 "use strict";
 
 const gulp = require("gulp");
-const changed = require("gulp-changed");
 const prettydiff = require("gulp-prettydiff");
 const injectString = require("gulp-inject-string");
 const rename = require("gulp-rename");
@@ -19,7 +18,6 @@ const clean = exports.clean = () => {
 const build = exports.build = () => {
   return gulp
     .src(sourcesGlob)
-    .pipe(changed(buildDir))
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
     .pipe(injectString.prepend("javascript:"))
     .pipe(gulp.dest(buildDir));
@@ -28,7 +26,6 @@ const build = exports.build = () => {
 const buildHTML = exports.buildHTML = () => {
   return gulp
     .src(sourcesGlob)
-    .pipe(changed(buildDir))
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
     .pipe(injectString.prepend("<script defer>\"use strict\";"))
     .pipe(injectString.append("</script>"))
