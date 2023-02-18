@@ -22,8 +22,8 @@ npm run build
 
 ## License
 
-[MIT License](https://opensource.org/licenses/MIT)
+[BSD Zero Clause License](https://spdx.org/licenses/0BSD.html)
 
 ## Copyright
 
-Copyright &copy; 2016&ndash;2017 Dan Poggi
+Copyright &copy; 2015&ndash;2023 Dan Poggi

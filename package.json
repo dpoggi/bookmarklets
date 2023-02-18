@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Browser bookmarklets",
   "author": "Dan Poggi <dan.poggi@gmail.com>",
-  "license": "MIT",
+  "license": "0BSD",
   "scripts": {
     "clean": "gulp clean",
     "build": "gulp build",
