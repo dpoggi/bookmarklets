@@ -952,6 +952,11 @@ gulp-prettydiff@^2.0.0:
     map-stream "0.0.7"
     prettydiff2 "^2.2.7"
 
+gulp-rename@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-2.0.0.tgz#9bbc3962b0c0f52fc67cd5eaff6c223ec5b9cf6c"
+  integrity sha512-97Vba4KBzbYmR5VBs9mWmK+HwIf5mj+/zioxfZhOKeXtx5ZjBk57KFlePf5nxq9QsTtFl0ejnHE3zTC9MHXqyQ==
+
 gulp-rimraf@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gulp-rimraf/-/gulp-rimraf-1.0.0.tgz#ccb3e639447e95831601f3d6d678bd3f33962285"
