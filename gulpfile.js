@@ -20,7 +20,8 @@ exports.build = () => {
   return gulp
     .src(sourcesGlob)
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
-    .pipe(prepend("javascript:"))
+    .pipe(prepend("javascript:(function(){\"use strict\";"))
+    .pipe(append("})();"))
     .pipe(dest(buildDir));
 };
 
@@ -28,8 +29,8 @@ exports["build-html"] = () => {
   return gulp
     .src(sourcesGlob)
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
-    .pipe(prepend("<script defer>\"use strict\";"))
-    .pipe(append("</script>"))
+    .pipe(prepend("<script defer>(function(){\"use strict\";"))
+    .pipe(append("})();</script>"))
     .pipe(rename({ extname: ".html" }))
     .pipe(dest(buildDir));
 };

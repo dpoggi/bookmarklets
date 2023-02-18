@@ -5,17 +5,16 @@
 // This software may be modified and distributed under the terms of the
 // BSD Zero Clause License. See the LICENSE file for details.
 
-(function() {
-  var node, range;
+var node, range;
 
-  node = window.getSelection().anchorNode;
-  while (node.tagName !== "PRE" && node.tagName !== "DIV") {
-    node = node.parentElement;
-  }
+node = window.getSelection().anchorNode;
 
-  range = document.createRange();
-  range.selectNode(node);
+while (node.tagName !== "PRE" && node.tagName !== "DIV") {
+  node = node.parentElement;
+}
 
-  window.getSelection().removeAllRanges();
-  window.getSelection().addRange(range);
-})();
+range = document.createRange();
+range.selectNode(node);
+
+window.getSelection().removeAllRanges();
+window.getSelection().addRange(range);
