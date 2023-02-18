@@ -1,33 +1,27 @@
-"use strict";
+import { deleteAsync } from "del";
 
-const gulp = require("gulp");
-const { dest } = gulp;
-const prettydiff = require("gulp-prettydiff");
-const { append, prepend } = require("gulp-inject-string");
-const rename = require("gulp-rename");
-const rimraf = require("gulp-rimraf");
+import gulp from "gulp";
+const { src, dest } = gulp;
+import injectString from "gulp-inject-string";
+const { append, prepend } = injectString;
+import prettydiff from "gulp-prettydiff";
+import rename from "gulp-rename";
 
 const sourcesGlob = "src/**/*.js";
 const buildDir = "build";
 
-exports.clean = () => {
-  return gulp
-    .src(buildDir, { read: false })
-    .pipe(rimraf());
-};
+const clean = () => deleteAsync(buildDir);
 
-exports.build = () => {
-  return gulp
-    .src(sourcesGlob)
+const build = () => {
+  return src(sourcesGlob)
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
     .pipe(prepend("javascript:(function(){\"use strict\";"))
     .pipe(append("})();"))
     .pipe(dest(buildDir));
 };
 
-exports["build-html"] = () => {
-  return gulp
-    .src(sourcesGlob)
+const buildHTML = () => {
+  return src(sourcesGlob)
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
     .pipe(prepend("<script defer>(function(){\"use strict\";"))
     .pipe(append("})();</script>"))
@@ -35,4 +29,5 @@ exports["build-html"] = () => {
     .pipe(dest(buildDir));
 };
 
-exports.default = exports.build;
+export { clean, build, buildHTML as "build-html" };
+export default build;
