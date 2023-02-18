@@ -31,7 +31,7 @@ const buildHTML = exports.buildHTML = () => {
     .pipe(changed(buildDir))
     .pipe(prettydiff({ lang: "javascript", mode: "minify" }))
     .pipe(injectString.prepend("<script defer>\"use strict\";"))
-    .pipe(injectString.append("</script>\n"))
+    .pipe(injectString.append("</script>"))
     .pipe(rename({ extname: ".html" }))
     .pipe(gulp.dest(buildDir));
 };
